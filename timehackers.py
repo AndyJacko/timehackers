@@ -1,4 +1,5 @@
 from time import sleep
+import os
 
 pause_time = 2
 andy_alive = 1 
@@ -7,284 +8,293 @@ lasharn_alive = 1
 saihar_alive = 1
 
 intro_txt = '''
- ::::::::::: ::::::::::: ::::    ::::  ::::::::::   :::    :::     :::      ::::::::  :::    ::: :::::::::: :::::::::   ::::::::
-     :+:         :+:     +:+:+: :+:+:+ :+:          :+:    :+:   :+: :+:   :+:    :+: :+:   :+:  :+:        :+:    :+: :+:    :+:
-     +:+         +:+     +:+ +:+:+ +:+ +:+          +:+    +:+  +:+   +:+  +:+        +:+  +:+   +:+        +:+    +:+ +:+
-     +#+         +#+     +#+  +:+  +#+ +#++:++#     +#++:++#++ +#++:++#++: +#+        +#++:++    +#++:++#   +#++:++#:  +#++:++#++
-     +#+         +#+     +#+       +#+ +#+          +#+    +#+ +#+     +#+ +#+        +#+  +#+   +#+        +#+    +#+        +#+
-     #+#         #+#     #+#       #+# #+#          #+#    #+# #+#     #+# #+#    #+# #+#   #+#  #+#        #+#    #+# #+#    #+#
-     ###     ########### ###       ### ##########   ###    ### ###     ###  ########  ###    ### ########## ###    ###  ########\n\n'''
+              ::::::::::: ::::::::::: ::::    ::::  ::::::::::   
+                  :+:         :+:     +:+:+: :+:+:+ :+:          
+                  +:+         +:+     +:+ +:+:+ +:+ +:+          
+                  +#+         +#+     +#+  +:+  +#+ +#++:++#     
+                  +#+         +#+     +#+       +#+ +#+          
+                  #+#         #+#     #+#       #+# #+#          
+                  ###     ########### ###       ### ##########     
+        
+    :::    :::     :::      ::::::::  :::    ::: :::::::::: :::::::::   :::::::: 
+    :+:    :+:   :+: :+:   :+:    :+: :+:   :+:  :+:        :+:    :+: :+:    :+: 
+    +:+    +:+  +:+   +:+  +:+        +:+  +:+   +:+        +:+    +:+ +:+
+    +#++:++#++ +#++:++#++: +#+        +#++:++    +#++:++#   +#++:++#:  +#++:++#++ 
+    +#+    +#+ +#+     +#+ +#+        +#+  +#+   +#+        +#+    +#+        +#+ 
+    #+#    #+# #+#     #+# #+#    #+# #+#   #+#  #+#        #+#    #+# #+#    #+# 
+    ###    ### ###     ###  ########  ###    ### ########## ###    ###  ########\n\n'''
 
 room_1_txt = '''
- !xxxxxxxxxxxx       xxxx    xxx    xxx    xxxx    xxxx     xxxxxx!
- !      xxxxxxxxxxxx    xxxx   xxxx   xxx    xxx    xxxx     xxxxx!
- !              xxxxxxx   xxxx   xxx   xxx   xxxx   xxxx    xxxxx !
- ! xxxxxxxx          xxxx   xxx  xxx   xxx   xxx    xxxx    xxxx  !
- !xxxxxxxxxxxxxxx      xxxx   xx  xxx  xxx   xxx   xxxx    xxxx   !
- !x            xxxxxxx   xxx   xx  xx  xxx   xxx   xxxx   xxxx    !
- !                  xxxx   xxx  x  xx  xxx  xxx   xxx    xxxx    x!
- !xxxxxxxxxxxxxxxxx    xxxx  xx  x  x  xx  xxx   xxx   xxxxx    xx!
- !xxx            xxxxxx   xxx xx x  x  x  xx   xxx    xxxx    xxxx!
- !       xxxxxxx       xxx  xx x x xx x  xx  xxx    xxx    xxxxx  !
- !  xxxxxxxxx    xxxxxxxx  xx x x    x xx  xx   xxxx    xxxxx     !
- !xxxx         xxxx       xxx x x x x x xx  xxxx    xxxxx     xxxx!
- !---+------------------------------------------------------------!
- !.. |". /  /  /  /...............................................!
- !...|.-". /  /  /................................................!
- !.. | _.-". /  /.................................. .|  |.........!
- !...|"  _.-". / .......... /\  .-"""-.  /\  ...... ||  || .......!
- !.. |-""   _.-".......... //\\\\/  ,,,  \//\\\\ ...... \\\\()//........!
- !   |_.-"" .............. |/\| ,;;;;;, |/\| ........={}=. .......!
- !.. | ................... //\\\\\;-"""-;///\\\\ ....../ /`'\ \.......!
- ! ^.|.^" ............... //  \/   .   \/  \\\\ .....` \  / ' ......!
- !'^\+/^` .............. (| ,-_| \ | / |_-, |) .......`'..........!
- !'/`"'\` ................ //`__\.-.-./__`\\\\  ....................!
- ! ......  ...  ......... // /.-(() ())-.\ \\ ........../\\\\/\\\\\....!
- !......./\\\\_//\........ (\ |)   '---'   (| /) .......///"-'\\\\\...!
- !......// O O \\\\........ ` (|  ......   |) `  ...................!
- !x....//..`"'..\\\\......... \\) ........  (/ .....................x!
- !x................................................ /\('')/\.....x!
- !x................................................ \ .... / ....x!
- !----------------------------------------------------------------!\n\n'''
+    !xxxxxxxxxxxx       xxxx    xxx    xxx    xxxx    xxxx     xxxxxx!
+    !      xxxxxxxxxxxx    xxxx   xxxx   xxx    xxx    xxxx     xxxxx!
+    !              xxxxxxx   xxxx   xxx   xxx   xxxx   xxxx    xxxxx !
+    ! xxxxxxxx          xxxx   xxx  xxx   xxx   xxx    xxxx    xxxx  !
+    !xxxxxxxxxxxxxxx      xxxx   xx  xxx  xxx   xxx   xxxx    xxxx   !
+    !x            xxxxxxx   xxx   xx  xx  xxx   xxx   xxxx   xxxx    !
+    !                  xxxx   xxx  x  xx  xxx  xxx   xxx    xxxx    x!
+    !xxxxxxxxxxxxxxxxx    xxxx  xx  x  x  xx  xxx   xxx   xxxxx    xx!
+    !xxx            xxxxxx   xxx xx x  x  x  xx   xxx    xxxx    xxxx!
+    !       xxxxxxx       xxx  xx x x xx x  xx  xxx    xxx    xxxxx  !
+    !  xxxxxxxxx    xxxxxxxx  xx x x    x xx  xx   xxxx    xxxxx     !
+    !xxxx         xxxx       xxx x x x x x xx  xxxx    xxxxx     xxxx!
+    !---+------------------------------------------------------------!
+    !.. |". /  /  /  /...............................................!
+    !...|.-". /  /  /................................................!
+    !.. | _.-". /  /.................................. .|  |.........!
+    !...|"  _.-". / .......... /\  .-"""-.  /\  ...... ||  || .......!
+    !.. |-""   _.-".......... //\\\\/  ,,,  \//\\\\ ...... \\\\()//........!
+    !   |_.-"" .............. |/\| ,;;;;;, |/\| ........={}=. .......!
+    !.. | ................... //\\\\\;-"""-;///\\\\ ....../ /`'\ \.......!
+    ! ^.|.^" ............... //  \/   .   \/  \\\\ .....` \  / ' ......!
+    !'^\+/^` .............. (| ,-_| \ | / |_-, |) .......`'..........!
+    !'/`"'\` ................ //`__\.-.-./__`\\\\  ....................!
+    ! ......  ...  ......... // /.-(() ())-.\ \\ ........../\\\\/\\\\\....!
+    !......./\\\\_//\........ (\ |)   '---'   (| /) .......///"-'\\\\\...!
+    !......// O O \\\\........ ` (|  ......   |) `  ...................!
+    !x....//..`"'..\\\\......... \\) ........  (/ .....................x!
+    !x................................................ /\('')/\.....x!
+    !x................................................ \ .... / ....x!
+    !----------------------------------------------------------------!\n\n'''
 
 room_2_txt = '''
- !xxxxxxxxxxxx       xxxx    xxx    xxx    xxxx    xxxx     xxxxxx!
- !      xxxxxxxxxxxx    xxxx   xxxx   xxx    xxx    xxxx     xxxxx!
- !              xxxxxxx   xxxx   xxx   xxx   xxxx   xxxx    xxxxx !
- ! xxxxxxxx          xxxx   xxx  xxx   xxx   xxx    xxxx    xxxx  !
- !xxxxxxxxxxxxxxx      xxxx   xx  xxx  xxx   xxx   xxxx    xxxx   !
- !x            xxxxxxx   xxx   xx  xx  xxx   xxx   xxxx   xxxx    !
- !                  xxxx   xxx  x  xx  xxx  xxx   xxx    xxxx    x!
- !xxxxxxxxxxxxxxxxx    xxxx  xx  x  x  xx  xxx   xxx   xxxxx    xx!
- !xxx            xxxxxx   xxx xx x  x  x  xx   xxx    xxxx    xxxx!
- !       xxxxxxx       xxx  xx x x xx x  xx  xxx    xxx    xxxxx  !
- !  xxxxxxxxx    xxxxxxxx  xx x x    x xx  xx   xxxx    xxxxx     !
- !xxxx         xxxx       xxx x x x x x xx  xxxx    xxxxx     xxxx! 
- !---------x======================================x---------------!
- !.........|        \                    /        |...............!
- !.........| (^)_____\__________________/_____(^) |... [ENTER] ...!
- !.........|          \                /          |... [ PSW ] ...!
- !.........|           +--------------+           |...............!
- !.........|           |              |           |...  [ x ]  ...!
- !.........| (^)_______|____+====+____|_______(^) |...  [ x ]  ...!
- !.........|           |    |....| x  |           |...  [ x ]  ...!
- !.........|           |    |....|    |           |...  [ x ]  ...!
- !.........|           |    |....|    |           |...............!
- !.........| (^)_______/_-_-_-_-_-_-_-\_______(^) |...............!
- !.........|        /./                \.\        |...............!
- !.........|       /./  What year did   \.\       |...............!
- !.........|      /./    Kurt Cobain     \.\      |...............!
- !x........| (^)_/_/_________Die?_________\_\_(^) |..............x!
- !x........|    /./                        \.\    |..............x!
- !x........|___/./       GOOGLE KNOWS       \.\___|..............x!
- !----------------------------------------------------------------!\n\n'''
+    !xxxxxxxxxxxx       xxxx    xxx    xxx    xxxx    xxxx     xxxxxx!
+    !      xxxxxxxxxxxx    xxxx   xxxx   xxx    xxx    xxxx     xxxxx!
+    !              xxxxxxx   xxxx   xxx   xxx   xxxx   xxxx    xxxxx !
+    ! xxxxxxxx          xxxx   xxx  xxx   xxx   xxx    xxxx    xxxx  !
+    !xxxxxxxxxxxxxxx      xxxx   xx  xxx  xxx   xxx   xxxx    xxxx   !
+    !x            xxxxxxx   xxx   xx  xx  xxx   xxx   xxxx   xxxx    !
+    !                  xxxx   xxx  x  xx  xxx  xxx   xxx    xxxx    x!
+    !xxxxxxxxxxxxxxxxx    xxxx  xx  x  x  xx  xxx   xxx   xxxxx    xx!
+    !xxx            xxxxxx   xxx xx x  x  x  xx   xxx    xxxx    xxxx!
+    !       xxxxxxx       xxx  xx x x xx x  xx  xxx    xxx    xxxxx  !
+    !  xxxxxxxxx    xxxxxxxx  xx x x    x xx  xx   xxxx    xxxxx     !
+    !xxxx         xxxx       xxx x x x x x xx  xxxx    xxxxx     xxxx! 
+    !---------x======================================x---------------!
+    !.........|        \                    /        |...............!
+    !.........| (^)_____\__________________/_____(^) |... [ENTER] ...!
+    !.........|          \                /          |... [ PSW ] ...!
+    !.........|           +--------------+           |...............!
+    !.........|           |              |           |...  [ x ]  ...!
+    !.........| (^)_______|____+====+____|_______(^) |...  [ x ]  ...!
+    !.........|           |    |....| x  |           |...  [ x ]  ...!
+    !.........|           |    |....|    |           |...  [ x ]  ...!
+    !.........|           |    |....|    |           |...............!
+    !.........| (^)_______/_-_-_-_-_-_-_-\_______(^) |...............!
+    !.........|        /./                \.\        |...............!
+    !.........|       /./  What year did   \.\       |...............!
+    !.........|      /./    Kurt Cobain     \.\      |...............!
+    !x........| (^)_/_/_________Die?_________\_\_(^) |..............x!
+    !x........|    /./                        \.\    |..............x!
+    !x........|___/./       GOOGLE KNOWS       \.\___|..............x!
+    !----------------------------------------------------------------!\n\n'''
 
 room_3_txt = '''
- !xxxxxxxxxxxx       xxxx    xxx    xxx    xxxx    xxxx     xxxxxx!
- !      xxxxxxxxxxxx    xxxx   xxxx   xxx    xxx    xxxx     xxxxx!
- !              xxxxxxx   xxxx   xxx   xxx   xxxx   xxxx    xxxxx !
- ! xxxxxxxx          xxxx   xxx  xxx   xxx   xxx    xxxx    xxxx  !
- !xxxxxxxxxxxxxxx      xxxx   xx  xxx  xxx   xxx   xxxx    xxxx   !
- !x            xxxxxxx   xxx   xx  xx  xxx   xxx   xxxx   xxxx    !
- !                  xxxx   xxx  x  xx  xxx  xxx   xxx    xxxx    x!
- !xxxxxxxxxxxxxxxxx    xxxx  xx  x  x  xx  xxx   xxx   xxxxx    xx!
- !xxx            xxxxxx   xxx xx x  x  x  xx   xxx    xxxx    xxxx!
- !       xxxxxxx       xxx  xx x x xx x  xx  xxx    xxx    xxxxx  !
- !  xxxxxxxxx    xxxxxxxx  xx x x    x xx  xx   xxxx    xxxxx     !
- !xxxx         xxxx       xxx x x x x x xx  xxxx    xxxxx     xxxx!
- !................................................................!
- !.................<o)))><........................................!
- !...><(((o>..........................<o)))><.....................!
- !................................................................!
- !................................................................!
- !.......................,---,....................................!
- !.....................,-'    `--,................................!
- !..............( `-,'            `\..............................!
- !...............\           ,    o \..........><(((o>............!
- !.............../   ,       ;       \............................!
- !...><(((o>....(_,-' \       `, _  ""/...........................!
- !.................... `-,___ =='__,-'............................!
- !........................................<o)))><.................!
- !................................................................!
- !x..............................................................x!
- !x..............><(((o>.........................................x!
- !x...............................................<o)))><........x!
- !----------------------------------------------------------------!\n\n'''
+    !xxxxxxxxxxxx       xxxx    xxx    xxx    xxxx    xxxx     xxxxxx!
+    !      xxxxxxxxxxxx    xxxx   xxxx   xxx    xxx    xxxx     xxxxx!
+    !              xxxxxxx   xxxx   xxx   xxx   xxxx   xxxx    xxxxx !
+    ! xxxxxxxx          xxxx   xxx  xxx   xxx   xxx    xxxx    xxxx  !
+    !xxxxxxxxxxxxxxx      xxxx   xx  xxx  xxx   xxx   xxxx    xxxx   !
+    !x            xxxxxxx   xxx   xx  xx  xxx   xxx   xxxx   xxxx    !
+    !                  xxxx   xxx  x  xx  xxx  xxx   xxx    xxxx    x!
+    !xxxxxxxxxxxxxxxxx    xxxx  xx  x  x  xx  xxx   xxx   xxxxx    xx!
+    !xxx            xxxxxx   xxx xx x  x  x  xx   xxx    xxxx    xxxx!
+    !       xxxxxxx       xxx  xx x x xx x  xx  xxx    xxx    xxxxx  !
+    !  xxxxxxxxx    xxxxxxxx  xx x x    x xx  xx   xxxx    xxxxx     !
+    !xxxx         xxxx       xxx x x x x x xx  xxxx    xxxxx     xxxx!
+    !................................................................!
+    !.................<o)))><........................................!
+    !...><(((o>..........................<o)))><.....................!
+    !................................................................!
+    !................................................................!
+    !.......................,---,....................................!
+    !.....................,-'    `--,................................!
+    !..............( `-,'            `\..............................!
+    !...............\           ,    o \..........><(((o>............!
+    !.............../   ,       ;       \............................!
+    !...><(((o>....(_,-' \       `, _  ""/...........................!
+    !.................... `-,___ =='__,-'............................!
+    !........................................<o)))><.................!
+    !................................................................!
+    !x..............................................................x!
+    !x..............><(((o>.........................................x!
+    !x...............................................<o)))><........x!
+    !----------------------------------------------------------------!\n\n'''
 
 room_4_txt = '''
- !xxxxxxxxxxxx       xxxx    xxx    xxx    xxxx    xxxx     xxxxxx!
- !      xxxxxxxxxxxx    xxxx   xxxx   xxx    xxx    xxxx     xxxxx!
- !              xxxxxxx   xxxx   xxx   xxx   xxxx   xxxx    xxxxx !
- ! xxxxxxxx          xxxx   xxx  xxx   xxx   xxx    xxxx    xxxx  !
- !xxxxxxxxxxxxxxx      xxxx   xx  xxx  xxx   xxx   xxxx    xxxx   !
- !x            xxxxxxx   xxx   xx  xx  xxx   xxx   xxxx   xxxx    !
- !                  xxxx   xxx  x  xx  xxx  xxx   xxx    xxxx    x!
- !xxxxxxxxxxxxxxxxx    xxxx  xx  x  x  xx  xxx   xxx   xxxxx    xx!
- !xxx            xxxxxx   xxx xx x  x  x  xx   xxx    xxxx    xxxx!
- !       xxxxxxx       xxx  xx x x xx x  xx  xxx    xxx    xxxxx  !
- !  xxxxxxxxx    xxxxxxxx  xx x x    x xx  xx   xxxx    xxxxx     !
- !xxxx         xxxx       xxx x x x x x xx  xxxx    xxxxx     xxxx!
- !................................................................!
- !...........................{ }..................................!
- !...)......................{ @ }..................)..............!
- !..(...(....(.........)...{ @@ }......)...........(..............!
- !..)..(..)...)...(...(...{ @@@  }......( ...(....(...(......(....!
- !...(..(..)...(..)....).{  @@@@  }.....)...)..(..)..(...)..(..)..!
- !...)..(......(.)...(.{    @@@@@  }.....(...)..)..)..)...)..)....!
- !....).(..)...(..)..){  @  @@@@@@  }...(....(..)..(...)..(..)....!
- !....(..)..).)..)...{  @@  @@@@@@@   }..)....)..)..)...)..)..)...!
- !...)..)....)....).{  @@@@@@@@@##@@@@  } (....)..)...)..)..).....!
- !xxxxx%%%%%%%%%%%%{   @@@@@#@@@#####@@@  }%%%%%%%%%%%%%%%xxxxxxxx!
- !xxxx%%%%%%%%%%%%%%%  @@@@@#@@########@@  %%%%%%%%%%%%%%%%%xxxxxx!
- !xxx%%%%%%%%%%%%%%%%%  @@@@@@#########@@  %%%%%%%%%%%%%%%%%%%%xxx!
- !xxx%%%%%%%%%%%%%%%%%   @@@@@##########@  %%%%%%%%%%%%%%%%%%%%xxx!
- !xx%%%%%%%%%%%%%%%%%%%%  @@@@@@#######@  %%%%%%%%%%%%%%%%%%%%%%xx!
- !xx%%%%%%%%%%%%%%%%%%%%%                %%%%%%%%%%%%%%%%%%%%%%%xx!
- !xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx!
- !----------------------------------------------------------------!\n\n'''   
+    !xxxxxxxxxxxx       xxxx    xxx    xxx    xxxx    xxxx     xxxxxx!
+    !      xxxxxxxxxxxx    xxxx   xxxx   xxx    xxx    xxxx     xxxxx!
+    !              xxxxxxx   xxxx   xxx   xxx   xxxx   xxxx    xxxxx !
+    ! xxxxxxxx          xxxx   xxx  xxx   xxx   xxx    xxxx    xxxx  !
+    !xxxxxxxxxxxxxxx      xxxx   xx  xxx  xxx   xxx   xxxx    xxxx   !
+    !x            xxxxxxx   xxx   xx  xx  xxx   xxx   xxxx   xxxx    !
+    !                  xxxx   xxx  x  xx  xxx  xxx   xxx    xxxx    x!
+    !xxxxxxxxxxxxxxxxx    xxxx  xx  x  x  xx  xxx   xxx   xxxxx    xx!
+    !xxx            xxxxxx   xxx xx x  x  x  xx   xxx    xxxx    xxxx!
+    !       xxxxxxx       xxx  xx x x xx x  xx  xxx    xxx    xxxxx  !
+    !  xxxxxxxxx    xxxxxxxx  xx x x    x xx  xx   xxxx    xxxxx     !
+    !xxxx         xxxx       xxx x x x x x xx  xxxx    xxxxx     xxxx!
+    !................................................................!
+    !...........................{ }..................................!
+    !...)......................{ @ }..................)..............!
+    !..(...(....(.........)...{ @@ }......)...........(..............!
+    !..)..(..)...)...(...(...{ @@@  }......( ...(....(...(......(....!
+    !...(..(..)...(..)....).{  @@@@  }.....)...)..(..)..(...)..(..)..!
+    !...)..(......(.)...(.{    @@@@@  }.....(...)..)..)..)...)..)....!
+    !....).(..)...(..)..){  @  @@@@@@  }...(....(..)..(...)..(..)....!
+    !....(..)..).)..)...{  @@  @@@@@@@   }..)....)..)..)...)..)..)...!
+    !...)..)....)....).{  @@@@@@@@@##@@@@  } (....)..)...)..)..).....!
+    !xxxxx%%%%%%%%%%%%{   @@@@@#@@@#####@@@  }%%%%%%%%%%%%%%%xxxxxxxx!
+    !xxxx%%%%%%%%%%%%%%%  @@@@@#@@########@@  %%%%%%%%%%%%%%%%%xxxxxx!
+    !xxx%%%%%%%%%%%%%%%%%  @@@@@@#########@@  %%%%%%%%%%%%%%%%%%%%xxx!
+    !xxx%%%%%%%%%%%%%%%%%   @@@@@##########@  %%%%%%%%%%%%%%%%%%%%xxx!
+    !xx%%%%%%%%%%%%%%%%%%%%  @@@@@@#######@  %%%%%%%%%%%%%%%%%%%%%%xx!
+    !xx%%%%%%%%%%%%%%%%%%%%%                %%%%%%%%%%%%%%%%%%%%%%%xx!
+    !xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx!
+    !----------------------------------------------------------------!\n\n'''   
 
 time_machine_txt = '''
-                                    oo   
-                                   oooo
-                                  oooooo
-                                 oooooooo
-                                oooooooooo
-                               oooooooooooo  
-                           xxxxxxxxxxxxxxxxxxx
-                      xxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-               xxxxxxxx                            xxxxxxxx
-            xxxxxx          ................             xxxxxx
-          xxxxxx              ............                 xxxxxxx
-        xxxxx                   ........                      xxxxxx
-      xxxxx       """"""          ....           """"""         xxxxx
-     xxxxx         """"            ..             """"           xxxxx
-    xxxxx           ""           ......            ""             xxxxx
-    xxxxx          """"        ..........         """"            xxxxx
-     xxxxx        """"""      ............       """"""          xxxxx
-      xxxxx      oo/         ...............          \oo     xxxxxx
-       xxxxx   ooo/                                    \ooo xxxxxxx 
-        xxxxx ooo/--------------------------------------\ooo xxxx
-            oooo/ ...   ...   ...   ...   ...  ...  ...  \oooo
-          ooooo/------------------------------------------\ooooo 
-         ooooo/ ...  ...   ...   ...   ...   ...  ...  ... \ooooo
-        ooooo/...  ...   ...   ...  ...  ...   ...  .... ...\ooooo
-       ooooo/------------------------------------------------\oooooo
-      ooooo/__________________________________________________\oooooo
-     oooooo|A|n|d|y|-|L|a|s|h|a|r|n|-|S|a|i|h|a|r|-|M|i|c|h|a|l\oooooo\n\n'''
+                                       oo   
+                                      oooo
+                                     oooooo
+                                    oooooooo
+                                   oooooooooo
+                                  oooooooooooo  
+                              xxxxxxxxxxxxxxxxxxx
+                         xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                      xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                  xxxxxxxx                            xxxxxxxx
+               xxxxxx          ................             xxxxxx
+             xxxxxx              ............                 xxxxxxx
+           xxxxx                   ........                      xxxxxx
+         xxxxx       """"""          ....           """"""         xxxxx
+        xxxxx         """"            ..             """"           xxxxx
+       xxxxx           ""           ......            ""             xxxxx
+       xxxxx          """"        ..........         """"            xxxxx
+        xxxxx        """"""      ............       """"""          xxxxx
+         xxxxx      oo/         ...............          \oo     xxxxxx
+          xxxxx   ooo/                                    \ooo xxxxxxx 
+           xxxxx ooo/--------------------------------------\ooo xxxx
+               oooo/ ...   ...   ...   ...   ...  ...  ...  \oooo
+             ooooo/------------------------------------------\ooooo 
+            ooooo/ ...  ...   ...   ...   ...   ...  ...  ... \ooooo
+           ooooo/...  ...   ...   ...  ...  ...   ...  .... ...\ooooo
+          ooooo/------------------------------------------------\oooooo
+         ooooo/__________________________________________________\oooooo
+        oooooo|A|n|d|y|-|L|a|s|h|a|r|n|-|S|a|i|h|a|r|-|M|i|c|h|a|l\oooooo\n\n'''
 
 spider_small_txt = '''                     
-                                                            /\\\\_//\\
-                                                           // O O \\\\
-                                                          //  `"'  \\\\
-    
-    
-                                        /\('')/\\
-                                        \      /  \n\n'''
+                                         /\\\\_//\\
+                                        // O O \\\\
+                                       //  `"'  \\\\
+
+
+                     /\('')/\\
+                     \      /  \n\n'''
 
 piranah_big_txt = ''' 
-                                                              o
-                                                             o 
-                                                   ,---,      o
-                                                 ,-'    `--, o  
-                                          ( `-,'            `\\
-                                           \           ,    @ \\
-                                           /   ,       ;       \\
-                                          (_,-' \       `, _  ""/
-                                                 `-,___ =='__,-' \n\n'''
+                                           o
+                                          o 
+                                ,---,      o
+                             ,-'    `--, o  
+                       ( `-,'            `\\
+                        \           ,    @ \\
+                        /   ,       ;       \\
+                       (_,-' \       `, _  ""/
+                              `-,___ =='__,-' \n\n'''
 
 spider_mama_txt = '''
-                                             /\  .-"""-.  /\ 
-                                            //\\\\/  ,,,  \//\\\\
-                                            |/\| ,;;;;;, |/\|
-                                            //\\\\\;-"""-;///\\\\ 
-                                           //  \/   .   \/  \\\\
-                                          (| ,-_| \ | / |_-, |)
-                                            //`__\.-.-./__`\\\\
-                                           // /.-(() ())-.\ \\
-                                          (\ |)   '---'   (| /)
-                                           ` (|           |) `
-                                              \\)         (/  \n\n'''
+                          /\  .-"""-.  /\ 
+                         //\\\\/  ,,,  \//\\\\
+                         |/\| ,;;;;;, |/\|
+                         //\\\\\;-"""-;///\\\\ 
+                        //  \/   .   \/  \\\\
+                       (| ,-_| \ | / |_-, |)
+                         //`__\.-.-./__`\\\\
+                        // /.-(() ())-.\ \\
+                       (\ |)   '---'   (| /)
+                        ` (|           |) `
+                           \\)         (/  \n\n'''
 
 kurt_txt = '''
-      +++++++++++++++++++++++++++++++++++++=++=::::::.::-==++**+*+++=====++=+===++++++++++++++++=-=--==================++++++++
-      +++++++++++++++++++++++++++++++++++++++=---:..::-+*#%@@@@@@@@@@%%#*+------:-----=======++++++++=----==-==-========+++++++
-      ++++++++++++++++++++++++++++++++++=====-:-==:..+%@@@@@#*+======+*%@@@#+=+++=+=====--------==+=+++++==-:---=-==-===+++++++
-      +++++++++++++++++++++++++++++==========-===-:.#@@@@%+.         .. .-*%@@%#%%%%%%%%##%#***#%%@@@@@@@%%#*=::--=--====++++++
-      +++++++++++++++++++++++++++===========-+=--:.#@@@@*.       ...::----=*#%@@%##%%%%###%@@@%#*++######%@@@@@#=:---=++=++++++
-      ++++++++++++++++++++++++++===========-===-: -@@@@#      ... :-=**#***#%#%@@%@%@@%%%@@#+--===+#%%%%%#*+*@@@@%+:=+++==+++++
-      +++++++++++++++++++++++============-===--:  =@@@@-     .... -+#%%%%%%####@%@@@@@@@@%=-+*#%####%%%*%##*.:#@@@@#-==++=+++++
-      ++++++++++++++++++++++============-=+==:..  :@@@@-     .... :==:::==--**#@@%%%%@@@@=:+##%%%%%####*##+:   #@@@@*==:-=+++++
-      ++++++++++++++++++++============--=+=--:     *@@@#     .... .:.....:=*++@@####%%%@@..=-::=+::*##++=:.    -@@@@#-++:=+++++
-      +++++++++++++++++++===========----====:       +@@@*.            . .--:=%%#*#####%@@:.::....-+*+=-::      :@@%@#:=+=++++++
-      ++++++++++++++++++==========-----=+===:.       :#@@%+:             .:*@#***#######@*....  :----:..       +@@@@+-===++++++
-      ++++++++++++++++==========-=-----+===:.       ..:-+#%@%*=-:....:-=+#%*+**#########*@*. .  ......        =@@@@+=-==+=+++++
-      +++++++++++++++===========------=+==-:.       .:=+===++*##%%%%%##***+=+**#%%%%%###++%%+.              -#@@@%-==:++==+++++
-      +++++++++++++++==========-------====-:.  ..   ::=++****+++=+++**###*+**=+*##%%####**=+#%%*=-:....:-=*%@@%*-.:+=-=++==++++
-      ++++++++++++++==========-------=+====-: .-. ::--=+**###*######%%##*=+*-..-****=-=###%#+=++*#%%@@@@%%##*+- ..+=====+-=++++
-      +++++++++++++==========--------=====--: :=. .:-==+*###****###%%%##*==++=+=+++++-=+*#%%%%##**++++++++***+: :-+========++++
-      +++++++++++===========---------++====--..:..:.-=++*###*+**##%%%#***++-=+**#***+*++*#%%%%%%%%%%%%%%##***+..-===-:=+===++++
-      ++++++++++============-------=+==--==--: ...-:-=++*##****####**+++=====+*+*=+*++=+*##%%%%%%%%%%%%%#*+**=.:-+==--+-+==++++
-      +++++++++===========----------++-=-=---:  ..:.-=++**#**+**#*++++==-==++**+++##+++++**##%%%#%%##%###*+*+:..-++=.-=+==+++++
-      ++++++++++==========---------==+=------. .. ..-=++****+***===+++++++****##*#%###*++++**#####%##%%##***+..-++*-.=====+++++
-      ++++++++===========----------+=+=-=--::. -.   -=+++***+++===+****#***+===+++++#%*##**+=+##*#######****-.-=++*.:=+=+++++++
-      +++++++===========----------=+==+---::.. :..  :===++++=++++*****+=--====---===#+-**=**+=+#########***=:-=+=*+:-++==++++++
-      +++++============----------:=+=-=---::.  :..  :-+==++===+++++*****###*****=-::=+==+**#*++#%######***+:=+=+:#-.--==+++++++
-      ++++============----------:-++===---:..  .:....-==+===--==++***#******++=++++*######*##***#####**##+=++=+.:#-:====+++++++
-      ++++============----------:-=-==-=--:.  .--::..-=++===---==++*******++==-===+**######**+++#####*##+++===. -+:-=-==+++++++
-      +++============--------::-:=====----:. ..+-+-: .-====-:.:--==+*****+==--::--=***####***+=+*******+=-=-:   --:-====+++++++
-      ++============----------:::==-==-=--...--+++=-  .--:-:...:===+=+====++++*+**++********++==+****+==-:...  .:::-==-++++++++
-      =============---------:::::====----:..=:=+**--....:.......--====+==++*=-==+*++++++++++==--=+*+++=:.::.    .::-+=-++++++++
-      ============---------::::::==-=-----.-:.==*+:-::....... ..:--==-==+=++=:--=+=+====+=++==::=+++++:::::     .-:=-+=++++++++
-      =========----------:::::::-==-=-==-:.:.::==::-:.:::::......:---=---==+=:--+=++=========-:-+*++-.:--:.     .:-====++++++++
-      ========----------::::::::===-=-=---...:-=:.:-..:-::--::....:::-------=---===========-:..-++-::==--...   ..:-===+++++++++
-      ======----------::::::::::-==-------..::-:.:-=..:--------:....:::-::--:::------===--:....-=-:=++=-:.:    .::-=-=+++++++++
-      ====------------::::::::::====-=---=...:::.:=:..--==--==-----::....:......:::-:-:...::-=++=-++*+=::-.   ...-====+++++++++
-      ===-----------::::::::::.--=-=-=---=-..:..:=:..:-========--------------:::::::::--==++++=-++**++-:-.    ...-+=-=+++++++++
-      ==-----------::::::::::.:-=====----=-::-----:..-===+======---========+++=+++++********+==*****++:::    ...:=+==++++++++++
-      ------------:::::::::...-===-:-===-----=:::--::-=++++++===--===++++*********######***+==**###++=:-..   ...:==-+++++++++++\n\n'''
+         +++++++++++++++++=++=::::::.::-==++**+*+++=====++=+===++++++++++++++++=-=--==================++++++++
+         +++++++++++++++++++=---:..::-+*#%@@@@@@@@@@%%#*+------:-----=======++++++++=----==-==-========+++++++
+         ++++++++++++++=====-:-==:..+%@@@@@#*+======+*%@@@#+=+++=+=====--------==+=+++++==-:---=-==-===+++++++
+         +++++++++==========-===-:.#@@@@%+.         .. .-*%@@%#%%%%%%%%##%#***#%%@@@@@@@%%#*=::--=--====++++++
+         +++++++===========-+=--:.#@@@@*.       ...::----=*#%@@%##%%%%###%@@@%#*++######%@@@@@#=:---=++=++++++
+         ++++++===========-===-: -@@@@#      ... :-=**#***#%#%@@%@%@@%%%@@#+--===+#%%%%%#*+*@@@@%+:=+++==+++++
+         +++============-===--:  =@@@@-     .... -+#%%%%%%####@%@@@@@@@@%=-+*#%####%%%*%##*.:#@@@@#-==++=+++++
+         ++============-=+==:..  :@@@@-     .... :==:::==--**#@@%%%%@@@@=:+##%%%%%####*##+:   #@@@@*==:-=+++++
+         ============--=+=--:     *@@@#     .... .:.....:=*++@@####%%%@@..=-::=+::*##++=:.    -@@@@#-++:=+++++
+         ==========----====:       +@@@*.            . .--:=%%#*#####%@@:.::....-+*+=-::      :@@%@#:=+=++++++
+         ========-----=+===:.       :#@@%+:             .:*@#***#######@*....  :----:..       +@@@@+-===++++++
+         ======-=-----+===:.       ..:-+#%@%*=-:....:-=+#%*+**#########*@*. .  ......        =@@@@+=-==+=+++++
+         ======------=+==-:.       .:=+===++*##%%%%%##***+=+**#%%%%%###++%%+.              -#@@@%-==:++==+++++
+         =====-------====-:.  ..   ::=++****+++=+++**###*+**=+*##%%####**=+#%%*=-:....:-=*%@@%*-.:+=-=++==++++
+         ====-------=+====-: .-. ::--=+**###*######%%##*=+*-..-****=-=###%#+=++*#%%@@@@%%##*+- ..+=====+-=++++
+         ===--------=====--: :=. .:-==+*###****###%%%##*==++=+=+++++-=+*#%%%%##**++++++++***+: :-+========++++
+         ==---------++====--..:..:.-=++*###*+**##%%%#***++-=+**#***+*++*#%%%%%%%%%%%%%%##***+..-===-:=+===++++
+         ==-------=+==--==--: ...-:-=++*##****####**+++=====+*+*=+*++=+*##%%%%%%%%%%%%%#*+**=.:-+==--+-+==++++
+         ----------++-=-=---:  ..:.-=++**#**+**#*++++==-==++**+++##+++++**##%%%#%%##%###*+*+:..-++=.-=+==+++++
+         ---------==+=------. .. ..-=++****+***===+++++++****##*#%###*++++**#####%##%%##***+..-++*-.=====+++++
+         ---------+=+=-=--::. -.   -=+++***+++===+****#***+===+++++#%*##**+=+##*#######****-.-=++*.:=+=+++++++
+         --------=+==+---::.. :..  :===++++=++++*****+=--====---===#+-**=**+=+#########***=:-=+=*+:-++==++++++
+         -------:=+=-=---::.  :..  :-+==++===+++++*****###*****=-::=+==+**#*++#%######***+:=+=+:#-.--==+++++++
+         ------:-++===---:..  .:....-==+===--==++***#******++=++++*######*##***#####**##+=++=+.:#-:====+++++++
+         ------:-=-==-=--:.  .--::..-=++===---==++*******++==-===+**######**+++#####*##+++===. -+:-=-==+++++++
+         ---::-:=====----:. ..+-+-: .-====-:.:--==+*****+==--::--=***####***+=+*******+=-=-:   --:-====+++++++
+         ----:::==-==-=--...--+++=-  .--:-:...:===+=+====++++*+**++********++==+****+==-:...  .:::-==-++++++++
+         --:::::====----:..=:=+**--....:.......--====+==++*=-==+*++++++++++==--=+*+++=:.::.    .::-+=-++++++++
+         -::::::==-=-----.-:.==*+:-::....... ..:--==-==+=++=:--=+=+====+=++==::=+++++:::::     .-:=-+=++++++++
+         ::::::-==-=-==-:.:.::==::-:.:::::......:---=---==+=:--+=++=========-:-+*++-.:--:.     .:-====++++++++
+         ::::::===-=-=---...:-=:.:-..:-::--::....:::-------=---===========-:..-++-::==--...   ..:-===+++++++++
+         ::::::-==-------..::-:.:-=..:--------:....:::-::--:::------===--:....-=-:=++=-:.:    .::-=-=+++++++++
+         ::::::====-=---=...:::.:=:..--==--==-----::....:......:::-:-:...::-=++=-++*+=::-.   ...-====+++++++++
+         ::::.--=-=-=---=-..:..:=:..:-========--------------:::::::::--==++++=-++**++-:-.    ...-+=-=+++++++++
+         :::.:-=====----=-::-----:..-===+======---========+++=+++++********+==*****++:::    ...:=+==++++++++++
+         :...-===-:-===-----=:::--::-=++++++===--===++++*********######***+==**###++=:-..   ...:==-+++++++++++\n\n'''
 
-welcome_txt = "Welcome to Time Hackers,\nYou are about to complete a series of challenges with your four friends: Andy, Michal, Lasharn and Saihar.\n\nOnce you complete all the challenges you will reach a time machine. You will be able to travel back in time and save Kurt Cobain.\n\nYou now find yourselves at the beginning of the corridor of doom. To reach the time machine, you must pass through a swarm of tarantulas, a locked door with laser beams, a pool of piranhas and a pit of lava.\nHelp your friends answer each challenge question in order to save them from death.\n"
-challenge_1_txt = "Challenge 1:\nYou encounter a swarm of deadly tarantulas,\nAndy steps forward to answer the following question.\nWho is the best superhero?.\n"
-challenge_2_txt = "Challenge 2:\nYou have reached a locked door with a giant keypad.\nTo unlock the door and safely get Michal through with you, enter the correct code.\nIf you fail to unlock the door, it will activate the laser beams which will destroy Michal.\nThere is a clue on the door which asks what year did Kurt Cobain die?\n"
-challenge_3_txt = "Challenge 3:\nYou are now halfway through.\nThe next encounter is a pool of piranhas,\nLasharn must get ready to answer this next geographical question.\n"
-challenge_4_txt = "Challenge 4:\nYou’ve now reached the final challenge, a pit full of molten lava.\nYou have an algebraic equation on a sign in front of you, What is the value of X?\nSaihar must answer the question correctly to proceed.\n"
-challenge_5_txt = "This is it!\nYou finally made it through all the challenges, and before you is the time machine.\nAwesome!\n"
+welcome_txt = "    Welcome to Time Hackers,\n\n    You are about to complete a series of challenges with your four friends:\n\n\n    Andy, Michal, Lasharn and Saihar.\n\n\n    Once you complete all the challenges you will reach a time machine.\n\n    You will be able to use the time machine to travel back in time\n    and save Kurt Cobain.\n\n    You find yourselves at the beginning of the corridor of doom. To reach\n    the time machine, you must pass through a swarm of deadly tarantulas, a\n    locked door with laser beams, a pool full of hungry piranhas and a\n    molten pit of lava.\n\n    Help your friends solve each challenge in order to save them from DEATH.\n"
+challenge_1_txt = "    Challenge 1:\n\n    You encounter a swarm of deadly tarantulas.\n\n    Andy steps forward to answer the tarantula Queen's question.\n\n    Who is the best superhero?\n"
+challenge_2_txt = "    Challenge 2:\n\n    You have reached a locked door with lasers and a giant keypad.\n\n    To unlock the door and safely get Michal through with you,\n    enter the correct code.\n\n    If you fail to unlock the door, it will activate the laser\n    beams which will destroy Michal.\n\n    There is a clue on the door which asks what year did\n    Kurt Cobain die?\n"
+challenge_3_txt = "    Challenge 3:\n\n    You are now halfway through.\n\n    The next encounter is a pool of hungry piranhas.\n\n    Lasharn gets ready to answer a geographical question.\n"
+challenge_4_txt = "    Challenge 4:\n\n    You’ve now reached the final challenge, a pit full\n    of molten lava.\n\n    There is an algebraic equation on a sign in front of you,\n    What is the value of X?\n\n    Saihar must answer the question correctly to proceed.\n"
+challenge_5_txt = "    This is it!\n\n    You finally made it through all the challenges, and before you is\n    the time machine.\n\n    Awesome!\n"
 
-challenge_1_quest = "Type \"A\" for Thor, \"B\" for Spiderman, \"C\" for Supergirl or \"D\" for Batman:\n"
-challenge_1_right = "\nRIGHT – GREAT! The tarantulas have all climbed back into their webs, allowing you to safely pass through.\n"
-challenge_1_wrong = "\nWRONG – OH NO! That was the wrong answer. Andy didn’t survive, but Michal, Lasharn and Saihar will continue.\n"
-challenge_2_quest = "Type the code to pass?\n"
-challenge_2_right = "\nRIGHT – AWESOME! Michal entered the code correctly. You wait for the door to slide open and continue on your quest.\n"
-challenge_2_wrong = "\nWRONG – OH NO! Michal didn’t get the code correct and now he vaprorised by laser beams! The door slides open to allow the others through.\n"
-challenge_3_quest = "Mount Kilimanjaro is the highest mountain in the world. True or False?\n"
-challenge_3_right = "\nRIGHT – CORRECT! The statement is false. It's Mount Everest. A bridge rises out of the water so that the group can continue.\n"
-challenge_3_wrong = "\nWRONG – OH NO! Wrong answer, the highest mountain is actually Mount Everest. Lasharn is attacked and eaten by the piranhas. A bridge rises out of the water so that the group can continue..\n"
-challenge_4_quest = "3x + 2 = 14\n"
-challenge_4_right = "\nRIGHT – WELL DONE! Saihar answered correctly. Stepping stones appear and allow the group to cross the lava lake together.\n"
-challenge_4_wrong = "\nWRONG – OH NO! Incorrect answer. Saihar has been engulfed by the lava. Stepping stones appear and you cross the lava lake.\n"
-challenge_5_quest = "You now have the option to travel back in time to save Kurt Cobain or go back and save your friend/s.\n\nEnter \"A\" if you wish to use the time machine to save Kurt or enter \"B\" to go back and rescue your friend/s\n"
+challenge_1_quest = "    Enter \"A\" for Thor, \"B\" for Spiderman, \"C\" for Supergirl\n    or \"D\" for Batman:\n"
+challenge_1_right = "\n    Correct! The tarantula Queen orders the other spiders back\n    into their webs.\n\n    You can all safely pass through.\n"
+challenge_1_wrong = "\n    OH NO! That was the wrong answer. Andy is attacked by all\n    the tarantulas and didn’t survive.\n\n    Michal, Lasharn and Saihar will continue without him.\n"
+challenge_2_quest = "    Type the code to pass?\n"
+challenge_2_right = "\n    AWESOME! Michal entered the code correctly.\n\n    You wait for the door to slide open and continue on your quest.\n"
+challenge_2_wrong = "\n    OH NO! Michal didn’t get the code correct and now he has been\n    vaprorised by laser beams!\n\n    The door slides open to allow the others through.\n"
+challenge_3_quest = "    Mount Kilimanjaro is the highest mountain in the world.\n    True or False?\n"
+challenge_3_right = "\n    CORRECT! The statement is false. It's actually Mount Everest.\n\n    A bridge rises out of the water and the group continue.\n"
+challenge_3_wrong = "\n    OH NO! Wrong answer, the highest mountain is Mount Everest.\n\n    Lasharn is attacked and eaten by the piranhas.\n\n    A bridge rises out of the water and the group continue.\n"
+challenge_4_quest = "    3x + 2 = 14\n"
+challenge_4_right = "\n    WELL DONE! Saihar answered correctly.\n\n    Stepping stones appear and allow the group to cross\n    the lava lake together.\n"
+challenge_4_wrong = "\n    OH NO! Incorrect answer. Saihar has been engulfed by the lava.\n\n    Stepping stones appear and you cross the lava lake.\n"
+challenge_5_quest_a = "    You now have the option to travel back in time to save Kurt Cobain\n    or go back and save your friend.\n\n    Enter \"A\" if you wish to use the time machine to save Kurt or\n    enter \"B\" to go back and rescue your friend.\n"
+challenge_5_quest_b = "    You now have the option to travel back in time to save Kurt Cobain\n    or go back and save your friends.\n\n    Enter \"A\" if you wish to use the time machine to save Kurt or\n    enter \"B\" to go back and rescue your friends.\n"
 
-ending_1_txt = "You go back in time and save Kurt Cobain\nCONGRATS, YOU WIN THE GAME!"
-ending_2_txt = "CONGRATS, everyone survived! You and your friends use the time machine to save Kurt Cobain together.\n\n\n"
+ending_1_txt = "    You go back in time and save Kurt Cobain\n\n    CONGRATS, YOU WIN THE GAME!"
+ending_2_txt = "    CONGRATS, everyone survived!\n\n    You and your friends use the time machine to save\n    Kurt Cobain together.\n\n\n"
 
-credits_1_txt = "                                                C R E D I T S"
-credits_2_txt = "                                                  ANDY JACKO"
-credits_3_txt = "                                                MICHAL WERNER"
-credits_4_txt = "                                                  LASHARN F"
-credits_5_txt = "                                                SAIHAR SIDDIQUE"
-credits_6_txt = "                                                 T H E  E N D"
+credits_1_txt = "                          C R E D I T S"
+credits_2_txt = "                            ANDY JACKO"
+credits_3_txt = "                           MICHAL WERNER"
+credits_4_txt = "                            LASHARN F"
+credits_5_txt = "                          SAIHAR SIDDIQUE"
+credits_6_txt = "                           T H E  E N D"
 
 new_line = "\n"
-clear_screen = "\033[H\033[J"
+os.system('cls||clear')
 
 def type_slow(print_this):
   for char in print_this:
-    sleep(0.03)
+    sleep(0.05)
     print(char, end="", flush=True)
 
 def roll_credits():
-  for i in range(80):
+  for i in range(100):
     sleep(0.25)
     print(new_line)
     if i == 10:
@@ -303,10 +313,10 @@ def roll_credits():
       print(piranah_big_txt)
     if i == 20:  
       print(spider_mama_txt)
-    if i == 70:  
-      print(kurt_txt)
     if i == 60:
       print(credits_6_txt)
+    if i == 80:  
+      print(kurt_txt)  
 
 def start_game():
   global andy_alive
@@ -318,24 +328,24 @@ def start_game():
   global saihar_alive
   saihar_alive = 1
 
-  print(clear_screen)
+  os.system('cls||clear')
   print(intro_txt)
   type_slow(welcome_txt)
   
-  sleep(pause_time * 2)
+  sleep(pause_time * 3)
   room_1()
 
 def room_1():
-  print(clear_screen)
+  os.system('cls||clear')
   print(room_1_txt)
-  type_slow(challenge_1_txt + new_line)
-  andy_question = input(challenge_1_quest)
+  type_slow(challenge_1_txt + new_line + challenge_1_quest + new_line) 
+  andy_question = input("    :- ")
   
   while andy_question.lower() != "a" and andy_question.lower() != "b" and andy_question.lower() != "c" and andy_question.lower() != "d": 
-    print(clear_screen)    
+    os.system('cls||clear')
     print(room_1_txt)
-    print(challenge_1_txt)
-    andy_question = input(challenge_1_quest)
+    print(challenge_1_txt + new_line + challenge_1_quest) 
+    andy_question = input("    :- ")
   
   if andy_question.lower() != "b":
     global andy_alive
@@ -348,16 +358,16 @@ def room_1():
   room_2()
 
 def room_2():  
-  print(clear_screen)
+  os.system('cls||clear')
   print(room_2_txt)
-  type_slow(challenge_2_txt + new_line)
-  michal_question = input(challenge_2_quest)
+  type_slow(challenge_2_txt + new_line + challenge_2_quest + new_line)
+  michal_question = input("    :- ")
   
   while michal_question == "":
-    print(clear_screen)
+    os.system('cls||clear')
     print(room_2_txt)
-    print(challenge_2_txt)
-    michal_question = input(challenge_2_quest)
+    print(challenge_2_txt + new_line + challenge_2_quest)
+    michal_question = input("    :- ")
   
   if michal_question.lower() != "1994":
     global michal_alive
@@ -370,16 +380,16 @@ def room_2():
   room_3()
 
 def room_3():
-  print(clear_screen)  
+  os.system('cls||clear')  
   print(room_3_txt)
-  type_slow(challenge_3_txt + new_line)
-  lasharn_question = input(challenge_3_quest)
+  type_slow(challenge_3_txt + new_line + challenge_3_quest + new_line)
+  lasharn_question = input("    :- ")
   
   while lasharn_question.lower() != "true" and lasharn_question.lower() != "false":
-    print(clear_screen)
+    os.system('cls||clear')
     print(room_3_txt)
-    print(challenge_3_txt)
-    lasharn_question = input(challenge_3_quest)    
+    print(challenge_3_txt + new_line + challenge_3_quest)
+    lasharn_question = input("    :- ")    
     
   if lasharn_question.lower() != "false":
     global lasharn_alive
@@ -392,16 +402,16 @@ def room_3():
   room_4()
  
 def room_4():
-  print(clear_screen)
+  os.system('cls||clear')
   print(room_4_txt)  
-  type_slow(challenge_4_txt + new_line)
-  saihar_question = input(challenge_4_quest)
+  type_slow(challenge_4_txt + new_line + challenge_4_quest + new_line)
+  saihar_question = input("    :- ")
   
   while saihar_question == "":
-    print(clear_screen)
+    os.system('cls||clear')
     print(room_4_txt)   
-    print(challenge_4_txt)
-    saihar_question = input(challenge_4_quest)
+    print(challenge_4_txt + new_line + challenge_4_quest)
+    saihar_question = input("    :- ")
   
   if saihar_question.lower() != "4":
     global saihar_alive
@@ -414,7 +424,7 @@ def room_4():
   room_5()
 
 def room_5():
-  print(clear_screen)  
+  os.system('cls||clear') 
   print(time_machine_txt)
   type_slow(challenge_5_txt + new_line)
   
@@ -429,29 +439,32 @@ def room_5():
     if saihar_alive == 0:
       dead_players.append("Saihar")
     if len(dead_players) > 2:
-      d_p = "Your friends "
+      d_p = "    Your friends "
+      who_to_save = challenge_5_quest_b
     else:
-      d_p = "Your friend "    
-    
+      d_p = "    Your friend " 
+      who_to_save = challenge_5_quest_a
+   
     if len(dead_players) > 1:
       for i in range(len(dead_players)):
         if i > 0:
-          d_p += dead_players[i] + ", "
-          
+          if i == (len(dead_players)-2) :
+            d_p += dead_players[i] + " and "
+          else:
+            d_p += dead_players[i] + ", "
+
     d_p = d_p[:-2]
-    d_p = d_p + " died."
-    print(d_p)
-    all_question = input(challenge_5_quest)
+    d_p = d_p + " didn't make it.\n\n"
+    type_slow(d_p + new_line + who_to_save + new_line)
+    all_question = input("    :- ")
 
     while all_question.lower() != "a" and all_question.lower() != "b":
-      print(clear_screen)
-      print(time_machine_txt)
-      print(challenge_5_txt)
-      print(d_p)
-      all_question = input(challenge_5_quest)    
+      os.system('cls||clear')
+      print(time_machine_txt + new_line + challenge_5_txt + new_line + d_p + new_line + who_to_save)
+      all_question = input("    :- ")    
     
     if all_question.lower() == "a":
-      print(clear_screen)
+      os.system('cls||clear')
       print(time_machine_txt)
       type_slow(ending_1_txt)
       roll_credits()
